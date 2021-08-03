@@ -1053,6 +1053,8 @@ void game_list_frame::ShowContextMenu(const QPoint &pos)
 	QAction* check_compat = menu.addAction(tr("&Check Game Compatibility"));
 	QAction* download_compat = menu.addAction(tr("&Download Compatibility Database"));
 	menu.addSeparator();
+	QAction* open_wiki = menu.addAction(tr("&Open Game's Wiki Page"));
+	menu.addSeparator();
 	QAction* edit_notes = menu.addAction(tr("&Edit Tooltip Notes"));
 
 	QMenu* icon_menu = menu.addMenu(tr("&Custom Images"));
@@ -1309,6 +1311,11 @@ void game_list_frame::ShowContextMenu(const QPoint &pos)
 	connect(check_compat, &QAction::triggered, this, [serial]
 	{
 		const QString link = "https://rpcs3.net/compatibility?g=" + serial;
+		QDesktopServices::openUrl(QUrl(link));
+	});
+	connect(open_wiki, &QAction::triggered, this, [serial]
+	{
+		const QString link = "https://wiki.rpcs3.net/index.php?title=" + current_game;
 		QDesktopServices::openUrl(QUrl(link));
 	});
 	connect(download_compat, &QAction::triggered, this, [this]
